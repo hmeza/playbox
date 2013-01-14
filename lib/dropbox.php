@@ -14,6 +14,16 @@ class dropbox {
 	 * @var \Dropbox\API 
 	 */
 	private $o_dropboxHandler = null;
+
+	/**
+	 * Given a full pathname, returns the name of the file or last folder name.
+	 * @param string $s_path
+	 * @return string
+	 */
+	static public function getNameFromPath($s_path) {
+		$st_parts = explode("/", $s_path);
+		return end($st_parts);
+	}
 	
 	/**
 	 * Creates a temporary file to be uploaded containing the list of folders.

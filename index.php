@@ -31,8 +31,8 @@ function drawPlaylist($st_playlist) {
 	</div>	
 	<a href="javascript:void(0);" onClick="$(\'#playlist\').playlist(\'prev\');">Prev</a>
 	<a href="javascript:void(0);" onClick="$(\'#playlist\').playlist(\'next\');">Next</a>
-	<a href="javascript:void(0);" onClick="$(\'#playlist\').playlist(\'pause\');">Pause</a>
-	<a href="javascript:void(0);" onClick="$(\'#playlist\').playlist(\'play\');">Play</a>';
+	<a href="javascript:void(0);" onClick="$(\'#playlist\').playlist(\'pause\');"><img src="lib/drplayer/i/pause.gif" alt="Pause" title="Pause"></a>
+	<a href="javascript:void(0);" onClick="$(\'#playlist\').playlist(\'play\');"><img src="lib/drplayer/i/play.gif" alt="Play" title="Play"></a>';
 	return $s_content;
 }
 
@@ -68,7 +68,7 @@ if(isset($_GET['store']) && $_GET['store'] == true) {
 }
 if(isset($_GET['play']) && $_GET['play'] == true) {
         $s_playlist = drawPlaylist($o_dropbox->getSharedPlaylist($_GET['path']));
-	$s_message = "Now playing...";
+	$s_message = "Now playing ".dropbox::getNameFromPath($_GET['path']);
 }
 
 
