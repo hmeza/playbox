@@ -8,9 +8,9 @@ define('DEFAULT_LINES_SEPARATOR', '<br><br>');
 function drawMusicList(dropbox $o_dropbox, $s_lastPathParameter) {
 	$s_content = 'My playlists:<br>';
 	$st_list = $o_dropbox->getMusicList();
-	foreach($st_list as $s_entry) {
-		$s_content .= '<a href="index.php?path='.$s_entry.$s_lastPathParameter.'&play=true">Play</a> ';
-		$s_content .= '<a href="'.$s_entry.'">'.$s_entry.'</a><br>';
+	foreach($st_list as $s_key => $s_entry) {
+		$s_content .= '<a href="index.php?path='.$s_key.$s_lastPathParameter.'&play=true">Play</a> ';
+		$s_content .= '<a href="'.$s_key.'">'.$s_key.'</a><br>';
 	}
 	return $s_content;
 }
@@ -31,7 +31,6 @@ function drawPlaylist($st_playlist) {
 	</div>	
 	<a href="javascript:void(0);" onClick="$(\'#playlist\').playlist(\'prev\');">Prev</a>
 	<a href="javascript:void(0);" onClick="$(\'#playlist\').playlist(\'next\');">Next</a>
-	
 	<a href="javascript:void(0);" onClick="$(\'#playlist\').playlist(\'pause\');">Pause</a>
 	<a href="javascript:void(0);" onClick="$(\'#playlist\').playlist(\'play\');">Play</a>';
 	return $s_content;
@@ -68,8 +67,7 @@ if(isset($_GET['store']) && $_GET['store'] == true) {
 	$s_message = "Folder stored successfully";
 }
 if(isset($_GET['play']) && $_GET['play'] == true) {
-	$st_music = $o_dropbox->share($_GET['path']);
-	$s_playlist = drawPlaylist($st_music);
+        $s_playlist = drawPlaylist($o_dropbox->getSharedPlaylist($_GET['path']));
 	$s_message = "Now playing...";
 }
 
@@ -99,13 +97,22 @@ $s_playlists = drawMusicList($o_dropbox, $s_lastPathParameter);
         });
     </script>
 <body>
+<table width="100%">
+<td colspan=2>
+</td>
+<?php echo $s_message.DEFAULT_LINES_SEPARATOR; ?>
+<td width="50%">
+<?php
+echo $s_content;
+?>
+</td>
+<td>
 <?php
 echo $s_playlists.DEFAULT_LINES_SEPARATOR;
 echo $s_playlist.DEFAULT_LINES_SEPARATOR;
-echo $s_message.DEFAULT_LINES_SEPARATOR;
-echo $s_content;
 ?>
-
+</td>
+</table>
 <!-- Work in progress -->
 Thanks to http://devreactor.com/ for the player
 </body>

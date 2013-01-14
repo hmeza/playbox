@@ -23,7 +23,7 @@ float: right;
 }
 .clear { clear: both; line-height: 0px !important; font-size: 0px !important; height: 0 !important }
 
-body {
+body table td {
 	background: #FFFFFF;
 	font-family: tahoma, arial, verdana, sans-serif, Lucida Sans;
     font-size: 11px;

@@ -70,7 +70,7 @@ class dropbox {
 	 */
 	public function addMusicPath($s_path) {
 		if(!in_array($s_path, $this->st_musicList))
-			$this->st_musicList[] = $s_path;
+			$this->st_musicList[$s_path] = array();
 	}
 	
 	/**
@@ -88,5 +88,24 @@ class dropbox {
 			}
 		}
 		return $st_shares;
+	}
+
+	/**
+	 * Retrieve playlist contents.
+	 * @param string $s_path
+	 * @return array
+	 */
+	public function getSharedPlaylist($s_path) {
+		$st_list = $this->getMusicList();
+		$st_music = array();
+		if(array_key_exists($s_path, $st_list) && !empty($st_list[$s_path])) {
+			$st_music = $st_list[$s_path];
+		}
+		else {
+			$st_music = $this->share($s_path);
+			$this->st_musicList[$s_path] = $st_music;
+			$this->storeMusicList();
+		}
+		return $st_music;
 	}
 }
