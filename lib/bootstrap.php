@@ -42,4 +42,4 @@ $storage = new \Dropbox\OAuth\Storage\PDO($encrypter, $userID);
 $storage->connect(DB_HOST, DB_NAME, DB_USER, DB_PASS, DB_PORT);
 // Create the consumer and API objects
 $OAuth = new \Dropbox\OAuth\Consumer\Curl($key, $secret, $storage, $callback);
-$dropbox = new \Dropbox\API($OAuth);
+$dropbox = new \Dropbox\API($OAuth, "dropbox");
