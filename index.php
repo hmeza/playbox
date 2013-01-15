@@ -7,6 +7,15 @@ include 'conf/lang/esp.php';
 
 define('DEFAULT_LINES_SEPARATOR', '<br><br>');
 
+/**
+ * Sort paths starting with folders.
+ * @param
+ */
+function sortPaths($a, $b) {
+    if($a->is_dir == $b->is_dir || ($a->is_dir && !$b->is_dir)) return 0;
+    return (!$a->is_dir && $b->is_dir) ? 1 : 0;
+}
+
 function drawMusicList(dropbox $o_dropbox, $s_lastPathParameter) {
 	$s_content = LANG_MY_PLAYLIST.'<br>';
 	$st_list = $o_dropbox->getMusicList();
@@ -43,6 +52,7 @@ function drawFolderList($metaData, $s_path, $s_lastPathParameter, $s_lastPath) {
 	$s_content = LANG_CURRENT_PATH.$s_path.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 	$s_content .= '<a href="index.php?path='.$s_path.$s_lastPathParameter.'&store=true">'.LANG_STORE_THIS_PATH.'</a><br>';
 	$s_content .= '<a href="index.php?path='.$s_lastPath.'">'.LANG_GO_BACK.'</a>'.DEFAULT_LINES_SEPARATOR;
+        usort($metaData['body']->contents, "sortPaths");
 	foreach($metaData['body']->contents as $o_item) {
 		if($o_item->is_dir == 1) {
 			$s_content .= '<a href="index.php?path='.$o_item->path.$s_lastPathParameter.'">'.$o_item->path.'</a><br>';
