@@ -38,6 +38,7 @@ class dropbox {
 	
 	public function __construct(\Dropbox\API $dropbox) {
 		$this->o_dropboxHandler = $dropbox;
+		$this->getMusicList();
 	}
 	
 	/**
@@ -64,7 +65,8 @@ class dropbox {
 				$tmp = tempnam(self::TMP_FILE_FOLDER, self::TMP_FILE_NAME);
 				$s_data = file_get_contents($st_data['name']);
 				$this->st_musicList = json_decode($s_data,true);
-				if(!is_array($this->st_musicList)) throw new \Exception("Error reading music list file");
+				if(isset($this->st_musicList['error']) || !is_array($this->st_musicList))
+						throw new \Exception("Error reading music list file");
 			}
 			catch(\Exception $e) {
 				$this->st_musicList = array();
@@ -81,6 +83,15 @@ class dropbox {
 	public function addMusicPath($s_path) {
 		if(!in_array($s_path, $this->st_musicList))
 			$this->st_musicList[$s_path] = array();
+	}
+	
+	/**
+	 * Removes a music folder if it exists.
+	 * @param string $s_path
+	 */
+	public function removeMusicPath($s_path) {
+		if(array_key_exists($s_path, $this->st_musicList))
+			unset($this->st_musicList[$s_path]);
 	}
 	
 	/**

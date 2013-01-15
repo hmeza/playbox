@@ -11,6 +11,7 @@ function drawMusicList(dropbox $o_dropbox, $s_lastPathParameter) {
 	$s_content = LANG_MY_PLAYLIST.'<br>';
 	$st_list = $o_dropbox->getMusicList();
 	foreach($st_list as $s_key => $s_entry) {
+		$s_content .= '<a href="index.php?path='.$s_key.$s_lastPathParameter.'&remove=true">'.LANG_REMOVE.'</a> ';
 		$s_content .= '<a href="index.php?path='.$s_key.$s_lastPathParameter.'&play=true">'.LANG_PLAY.'</a> ';
 		$s_content .= '<a href="'.$s_key.'">'.$s_key.'</a><br>';
 	}
@@ -41,7 +42,7 @@ function drawPlaylist($st_playlist) {
 function drawFolderList($metaData, $s_path, $s_lastPathParameter, $s_lastPath) {
 	$s_content = LANG_CURRENT_PATH.$s_path.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 	$s_content .= '<a href="index.php?path='.$s_path.$s_lastPathParameter.'&store=true">'.LANG_STORE_THIS_PATH.'</a><br>';
-	$s_content .= '<a href="index.php?path='.$s_lastPath.'">Go back</a>'.DEFAULT_LINES_SEPARATOR;
+	$s_content .= '<a href="index.php?path='.$s_lastPath.'">'.LANG_GO_BACK.'</a>'.DEFAULT_LINES_SEPARATOR;
 	foreach($metaData['body']->contents as $o_item) {
 		if($o_item->is_dir == 1) {
 			$s_content .= '<a href="index.php?path='.$o_item->path.$s_lastPathParameter.'">'.$o_item->path.'</a><br>';
@@ -68,8 +69,13 @@ if(isset($_GET['store']) && $_GET['store'] == true) {
 	$s_message = LANG_STORE_SUCCESSFULLY;
 }
 if(isset($_GET['play']) && $_GET['play'] == true) {
-        $s_playlist = drawPlaylist($o_dropbox->getSharedPlaylist($_GET['path']));
+	$s_playlist = drawPlaylist($o_dropbox->getSharedPlaylist($_GET['path']));
 	$s_message = LANG_NOW_PLAYING.dropbox::getNameFromPath($_GET['path']);
+}
+if(isset($_GET['remove']) && $_GET['remove'] == true) {
+	$o_dropbox->removeMusicPath($_GET['path']);
+	$o_dropbox->storeMusicList();
+	$s_path = "/";
 }
 
 
