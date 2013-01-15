@@ -7,7 +7,6 @@ require_once('lib/view.php');
 include 'conf/lang/esp.php';
 
 define('DEFAULT_LINES_SEPARATOR', '<br><br>');
-define('URL', 'http://xxxxxxxxxxx.xxx');
 
 /**
  * Sort paths starting with folders.

@@ -8,4 +8,6 @@ define('DB_NAME', 'dropbox');
 define('DB_USER', 'username');
 define('DB_PASS', 'password');
 define('DB_PORT', '3306');
+
+define('URL', 'http://xxxxxxxxxxx.xxx');
 ?>
