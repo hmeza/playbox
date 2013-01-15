@@ -25,6 +25,12 @@ class dropbox {
 		return end($st_parts);
 	}
 	
+	static public function getParentPath($s_path) {
+		$st_lastPathParts = explode("/", $s_path);
+		array_pop($st_lastPathParts);
+		return implode("/", $st_lastPathParts);
+	}
+	
 	/**
 	 * Creates a temporary file to be uploaded containing the list of folders.
 	 */

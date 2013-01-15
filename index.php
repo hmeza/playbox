@@ -2,10 +2,12 @@
 require_once('conf/conf.php');
 require_once('lib/bootstrap.php');
 require_once('lib/dropbox.php');
+require_once('lib/view.php');
 
 include 'conf/lang/esp.php';
 
 define('DEFAULT_LINES_SEPARATOR', '<br><br>');
+define('URL', 'http://myurl.com');
 
 /**
  * Sort paths starting with folders.
@@ -22,7 +24,7 @@ function drawMusicList(dropbox $o_dropbox) {
 	foreach($st_list as $s_key => $s_entry) {
 		$s_content .= '<a href="index.php?path='.$s_key.'&remove=true">'.LANG_REMOVE.'</a> ';
 		$s_content .= '<a href="index.php?path='.$s_key.'&play=true">'.LANG_PLAY.'</a> ';
-		$s_content .= '<a href="'.$s_key.'">'.$s_key.'</a><br>';
+		$s_content .= '<a href="'.$s_key.'">'.\dropbox::getNameFromPath($s_key).'</a><br>';
 	}
 	return $s_content;
 }
@@ -68,9 +70,6 @@ global $dropbox;
 $o_dropbox = new dropbox($dropbox);
 if(isset($_GET['path']) && !empty($_GET['path'])) $s_path = urldecode($_GET['path']);
 else $s_path = "/";
-$st_lastPathParts = explode("/", $s_path);
-array_pop($st_lastPathParts);
-$s_lastPath = implode("/", $st_lastPathParts);
 $s_message =  '';
 $s_playlist = '';
 if(isset($_GET['store']) && $_GET['store'] == true) {
@@ -91,7 +90,7 @@ if(isset($_GET['remove']) && $_GET['remove'] == true) {
 
 
 // Get html content to show folders and files
-$s_content = drawFolderList($dropbox->metaData($s_path), $s_path, $s_lastPath);
+$s_content = drawFolderList($dropbox->metaData($s_path), $s_path, \dropbox::getParentPath($s_path));
 // Get playlists
 $s_playlists = drawMusicList($o_dropbox);
 
@@ -114,10 +113,20 @@ $s_playlists = drawMusicList($o_dropbox);
         });
     </script>
 <body>
+<?php
+echo \view::facebookLikeScript();
+?>
 <table width="100%">
-<td colspan=2>
-</td>
+<td>
 <?php echo $s_message.DEFAULT_LINES_SEPARATOR; ?>
+</td>
+<td>
+<?php
+echo \view::facebookLike();
+echo \view::googlePlusOne();
+?>
+</td>
+<tr>
 <td width="50%" valign="top">
 <?php
 echo $s_content;
