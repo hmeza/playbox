@@ -16,12 +16,12 @@ function sortPaths($a, $b) {
     return (!$a->is_dir && $b->is_dir) ? 1 : 0;
 }
 
-function drawMusicList(dropbox $o_dropbox, $s_lastPathParameter) {
+function drawMusicList(dropbox $o_dropbox) {
 	$s_content = LANG_MY_PLAYLIST.'<br>';
 	$st_list = $o_dropbox->getMusicList();
 	foreach($st_list as $s_key => $s_entry) {
-		$s_content .= '<a href="index.php?path='.$s_key.$s_lastPathParameter.'&remove=true">'.LANG_REMOVE.'</a> ';
-		$s_content .= '<a href="index.php?path='.$s_key.$s_lastPathParameter.'&play=true">'.LANG_PLAY.'</a> ';
+		$s_content .= '<a href="index.php?path='.$s_key.'&remove=true">'.LANG_REMOVE.'</a> ';
+		$s_content .= '<a href="index.php?path='.$s_key.'&play=true">'.LANG_PLAY.'</a> ';
 		$s_content .= '<a href="'.$s_key.'">'.$s_key.'</a><br>';
 	}
 	return $s_content;
@@ -48,14 +48,14 @@ function drawPlaylist($st_playlist) {
 	return $s_content;
 }
 
-function drawFolderList($metaData, $s_path, $s_lastPathParameter, $s_lastPath) {
+function drawFolderList($metaData, $s_path, $s_lastPath) {
 	$s_content = LANG_CURRENT_PATH.$s_path.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-	$s_content .= '<a href="index.php?path='.$s_path.$s_lastPathParameter.'&store=true">'.LANG_STORE_THIS_PATH.'</a><br>';
+	$s_content .= '<a href="index.php?path='.$s_path.'&store=true">'.LANG_STORE_THIS_PATH.'</a><br>';
 	$s_content .= '<a href="index.php?path='.$s_lastPath.'">'.LANG_GO_BACK.'</a>'.DEFAULT_LINES_SEPARATOR;
         usort($metaData['body']->contents, "sortPaths");
 	foreach($metaData['body']->contents as $o_item) {
 		if($o_item->is_dir == 1) {
-			$s_content .= '<a href="index.php?path='.$o_item->path.$s_lastPathParameter.'">'.$o_item->path.'</a><br>';
+			$s_content .= '<a href="index.php?path='.$o_item->path.'">'.$o_item->path.'</a><br>';
 		}
 		else {
 			$s_content .= $o_item->path.'<br>';
@@ -66,10 +66,11 @@ function drawFolderList($metaData, $s_path, $s_lastPathParameter, $s_lastPath) {
 
 global $dropbox;
 $o_dropbox = new dropbox($dropbox);
-if(isset($_GET['path'])) $s_path = urldecode($_GET['path']);
+if(isset($_GET['path']) && !empty($_GET['path'])) $s_path = urldecode($_GET['path']);
 else $s_path = "/";
-if(isset($_GET['last_path'])) $s_lastPath = urldecode($_GET['last_path']);
-else $s_lastPath = '/';
+$st_lastPathParts = explode("/", $s_path);
+array_pop($st_lastPathParts);
+$s_lastPath = implode("/", $st_lastPathParts);
 $s_message =  '';
 $s_playlist = '';
 if(isset($_GET['store']) && $_GET['store'] == true) {
@@ -89,11 +90,10 @@ if(isset($_GET['remove']) && $_GET['remove'] == true) {
 }
 
 
-$s_lastPathParameter = '&last_path='.$s_path;
 // Get html content to show folders and files
-$s_content = drawFolderList($dropbox->metaData($s_path), $s_path, $s_lastPathParameter, $s_lastPath);
+$s_content = drawFolderList($dropbox->metaData($s_path), $s_path, $s_lastPath);
 // Get playlists
-$s_playlists = drawMusicList($o_dropbox, $s_lastPathParameter);
+$s_playlists = drawMusicList($o_dropbox);
 
 ?>
 <html>
