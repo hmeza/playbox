@@ -80,8 +80,8 @@ class view {
 		</div>	
 		<a href="javascript:void(0);" onClick="$(\'#playlist\').playlist(\'prev\');">'.LANG_PREV.'</a>
 		<a href="javascript:void(0);" onClick="$(\'#playlist\').playlist(\'next\');">'.LANG_NEXT.'</a>
-		<a href="javascript:void(0);" onClick="$(\'#playlist\').playlist(\'pause\');"><img src="lib/drplayer/i/pause.gif" alt="'.LANG_PAUSE.'" title="'.LANG_PAUSE.'"></a>
-		<a href="javascript:void(0);" onClick="$(\'#playlist\').playlist(\'play\');"><img src="lib/drplayer/i/play.gif" alt="'.LANG_PLAY.'" title="'.LANG_PLAY.'"></a>';
+		<a href="javascript:void(0);" onClick="$(\'#playlist\').playlist(\'pause\');">'.LANG_PAUSE.'</a>
+		<a href="javascript:void(0);" onClick="$(\'#playlist\').playlist(\'play\');">'.LANG_PLAY.'</a>';
 		return $s_content;
 	}
 	
