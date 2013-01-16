@@ -71,7 +71,7 @@ class view {
 				<div>
 				<div class="fr duration"></div>
 				<div class="btn play"></div>
-				<div class="title">'.$st_entry['path'].'</div>
+				<div class="title">'.\dropbox::getNameFromPath($st_entry['path']).'</div>
 				</div>
 				<div class="player inactive"></div>
 				</div>';
