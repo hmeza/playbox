@@ -86,6 +86,20 @@ class view {
 		return $s_content;
 	}
 	
+	/**
+	 * Draws the javascript code to be executed once the DOM is fully loaded.
+	 * @return string
+	 */
+	static function bodyReady() {
+		return '
+			<script>
+			$(document).ready(function () {
+				$(\'#playlist\').playlist(\'play\');
+			});
+			</script>
+				';
+	}
+	
 	static function drawFolderList($metaData, $s_path, $s_lastPath) {
 		$s_content = LANG_CURRENT_PATH.$s_path.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 		$s_content .= '<a href="index.php?path='.$s_path.'&store=true">'.LANG_STORE_THIS_PATH.'</a><br>';
