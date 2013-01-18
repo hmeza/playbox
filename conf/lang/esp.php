@@ -8,6 +8,6 @@ define('LANG_CURRENT_PATH', 'Ruta actual: ');
 define('LANG_STORE_THIS_PATH', 'Guardar esta ruta como lista de reproducción');
 define('LANG_NOW_PLAYING', 'Escuchando ');
 define('LANG_STORE_SUCCESSFULLY', 'Ruta guardada correctamente');
-define('LANG_GO_BACK', 'Atrás');
+define('LANG_GO_BACK', 'Carpeta superior');
 define('LANG_REMOVE', '<img src="lib/drplayer/i/delete.gif" alt="Borrar" title="Borrar">');
 ?>

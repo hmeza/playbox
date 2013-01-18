@@ -1,6 +1,10 @@
 <?php
 
 class view {
+	/**
+	 * Draws the header of the view.
+	 * @return string
+	 */
 	static public function head() {
 		$s_return = '
 <head>
@@ -22,6 +26,10 @@ class view {
 		return $s_return;
 	}
 	
+	/**
+	 * Script to make Facebook Like button work.
+	 * @return string
+	 */
 	static public function facebookLikeScript() {
 		$s_return = '<div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -34,11 +42,19 @@ class view {
 		return $s_return;
 	}
 	
+	/**
+	 * Draws the Like button from Facebook.
+	 * @return string
+	 */
 	static public function facebookLike() {
 		$s_return = '<div class="fb-like" data-href="'.URL.'" data-send="true" data-layout="button_count" data-width="450" data-show-faces="true" data-font="arial"></div>';
 		return $s_return;
 	}
 	
+	/**
+	 * Draws the google +1 button.
+	 * @return string
+	 */
 	static public function googlePlusOne() {
 		$s_return = '
 <div class="g-plusone" data-size="medium" data-href="<?php echo URL; ?>"></div>
@@ -54,6 +70,11 @@ class view {
 		return $s_return;
 	}
 	
+	/**
+	 * Draws the music list (list of playlists).
+	 * @param dropbox $o_dropbox
+	 * @return string
+	 */
 	static function drawMusicList(dropbox $o_dropbox) {
 		$s_content = LANG_MY_PLAYLIST.'<br>';
 		$st_list = $o_dropbox->getMusicList();
@@ -65,6 +86,11 @@ class view {
 		return $s_content;
 	}
 	
+	/**
+	 * Draws the playlist.
+	 * @param array $st_playlist
+	 * @return string
+	 */
 	static function drawPlaylist($st_playlist) {
 		$s_content = '<div id="playlist">';
 		foreach($st_playlist as $st_entry) {
@@ -100,10 +126,17 @@ class view {
 				';
 	}
 	
-	static function drawFolderList($metaData, $s_path, $s_lastPath) {
+	/**
+	 * Shows the folder list.
+	 * @param unknown $metaData
+	 * @param string $s_path
+	 * @param string $s_lastPath
+	 * @return string
+	 */
+	static function drawFolderList($metaData, $s_path) {
 		$s_content = LANG_CURRENT_PATH.$s_path.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 		$s_content .= '<a href="index.php?path='.$s_path.'&store=true">'.LANG_STORE_THIS_PATH.'</a><br>';
-		$s_content .= '<a href="index.php?path='.$s_lastPath.'">'.LANG_GO_BACK.'</a>'.DEFAULT_LINES_SEPARATOR;
+		$s_content .= '<a href="index.php?path='.\dropbox::getParentPath($s_path).'">'.LANG_GO_BACK.'</a>'.DEFAULT_LINES_SEPARATOR;
 		$s_content .= '<ul>';
 		usort($metaData['body']->contents, "sortPaths");
 		foreach($metaData['body']->contents as $o_item) {

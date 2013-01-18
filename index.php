@@ -68,7 +68,7 @@ echo \view::googlePlusOne();
 <tr>
 <td width="50%" valign="top">
 <?php
-echo \view::drawFolderList($dropbox->metaData($s_path), $s_path, \dropbox::getParentPath($s_path));
+echo \view::drawFolderList($dropbox->metaData($s_path), $s_path);
 ?>
 </td>
 <td valign="top">
