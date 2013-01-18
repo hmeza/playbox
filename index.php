@@ -49,7 +49,7 @@ echo \view::head();
 <?php
 echo \view::facebookLikeScript();
 ?>
-<table width="100%">
+<table width="100%" class="aceitunes">
 <td>
 <?php echo $s_message.DEFAULT_LINES_SEPARATOR; ?>
 </td>

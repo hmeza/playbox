@@ -5,6 +5,7 @@ class view {
 		$s_return = '
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<link rel="Stylesheet" href="aceitunes.css" type="text/css" />
     <link rel="Stylesheet" href="lib/drplayer/drplayer.css" type="text/css" />
     <script src="lib/js/jquery.js" type="text/javascript"></script>
     <script src="lib/drplayer/drplayer.js" type="text/javascript"></script>
@@ -89,15 +90,19 @@ class view {
 		$s_content = LANG_CURRENT_PATH.$s_path.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 		$s_content .= '<a href="index.php?path='.$s_path.'&store=true">'.LANG_STORE_THIS_PATH.'</a><br>';
 		$s_content .= '<a href="index.php?path='.$s_lastPath.'">'.LANG_GO_BACK.'</a>'.DEFAULT_LINES_SEPARATOR;
-	        usort($metaData['body']->contents, "sortPaths");
+		$s_content .= '<ul>';
+		usort($metaData['body']->contents, "sortPaths");
 		foreach($metaData['body']->contents as $o_item) {
 			if($o_item->is_dir == 1) {
-				$s_content .= '<a href="index.php?path='.$o_item->path.'">'.$o_item->path.'</a><br>';
+				$s_content .= '<li class="aceitunes">
+						<a href="index.php?path='.$o_item->path.'" class="aceitunes">'.\dropbox::getNameFromPath($o_item->path).'</a>
+								</li>';
 			}
 			else {
-				$s_content .= $o_item->path.'<br>';
+				$s_content .= '<li class="aceitunes">'.\dropbox::getNameFromPath($o_item->path).'</li>';
 			}
 		}
+		$s_content .= '</ul>';
 		return $s_content;
 	}
 	
