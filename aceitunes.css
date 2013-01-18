@@ -46,6 +46,7 @@ a.aceitunes:hover {
 html, body {
 	height: 90%;
 	border: 15px;
+	color: #000000;
 }
 
 #top, #bottom, #left, #right {
@@ -62,6 +63,9 @@ html, body {
 #top, #bottom {
 	left: 0; right: 0;
 	height: 30px;
+	font-size: 20px;
+	color: #222;
+	text-shadow: 0px 2px 3px #555;
 }
 #top { top: 0; }
 #bottom { bottom: 0; }
