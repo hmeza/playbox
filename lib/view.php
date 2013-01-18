@@ -8,6 +8,7 @@ class view {
 	static public function head() {
 		$s_return = '
 <head>
+	<title>'.SITE_NAME.'</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<link rel="Stylesheet" href="aceitunes.css" type="text/css" />
     <link rel="Stylesheet" href="lib/drplayer/drplayer.css" type="text/css" />
