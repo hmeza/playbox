@@ -128,7 +128,7 @@ class view {
 	
 	/**
 	 * Shows the folder list.
-	 * @param unknown $metaData
+	 * @param array $metaData
 	 * @param string $s_path
 	 * @param string $s_lastPath
 	 * @return string
