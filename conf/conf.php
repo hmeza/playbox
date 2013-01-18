@@ -10,4 +10,5 @@ define('DB_PASS', 'password');
 define('DB_PORT', '3306');
 
 define('URL', 'http://xxxxxxxxxxx.xxx');
+define('SITE_NAME', 'Drop.hol.es - BETA');
 ?>

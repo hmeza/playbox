@@ -32,6 +32,13 @@ if(isset($_GET['store'])) {
 if(isset($_GET['play'])) {
 	$s_playlist = \view::drawPlaylist($o_dropbox->getSharedPlaylist($_GET['path']));
 	$s_message = LANG_NOW_PLAYING.dropbox::getNameFromPath($_GET['path']);
+	$s_bodyEnd = '
+			<script>
+			$(document).ready(function () {
+				$(\'#playlist\').playlist(\'play\');
+			});
+			</script>
+				';
 }
 if(isset($_GET['remove'])) {
 	$o_dropbox->removeMusicPath($_GET['path']);
@@ -50,15 +57,20 @@ echo \view::head();
 echo \view::facebookLikeScript();
 ?>
 <table width="100%" class="aceitunes">
-<td>
-<?php echo $s_message.DEFAULT_LINES_SEPARATOR; ?>
-</td>
+<tr>
+<td><p class="aceitunes"><?php echo SITE_NAME; ?></p></td>
 <td>
 <?php
 echo \view::facebookLike();
 echo \view::googlePlusOne();
 ?>
 </td>
+</tr>
+<tr>
+<td colspan=2>
+<?php echo $s_message.DEFAULT_LINES_SEPARATOR; ?>
+</td>
+</tr>
 <tr>
 <td width="50%" valign="top">
 <?php
@@ -72,5 +84,6 @@ echo $s_playlist.DEFAULT_LINES_SEPARATOR;
 ?>
 </td>
 </table>
+<?php if(isset($s_bodyEnd)) echo $s_bodyEnd; ?>
 </body>
 </html>
