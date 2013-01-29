@@ -154,7 +154,40 @@ class view {
 		return $s_content;
 	}
 	
-	static public function main() {
+	static public function main($o_dropbox, $dropbox, $s_message = '', $s_path = '', $s_bodyEnd) {
+		echo '
+<!-- Dirty, but in progress -->
+<html>
+'.\view::head().'
+<body>
+<?php
+echo \view::facebookLikeScript();
+?>
+<table width="100%" class="aceitunes">
+<tr>
+<td><p class="aceitunes">'.SITE_NAME.'</p></td>
+<td>
+'.\view::facebookLike().'
+'.\view::googlePlusOne().'
+</td>
+</tr>
+<tr>
+<td colspan=2>
+'.$s_message.DEFAULT_LINES_SEPARATOR.'
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+'.\view::drawFolderList($dropbox->metaData($s_path), $s_path).'
+</td>
+<td valign="top">
+'.\view::drawMusicList($o_dropbox).DEFAULT_LINES_SEPARATOR.'
+'.$s_playlist.DEFAULT_LINES_SEPARATOR.'
+</td>
+</table>
+'.((isset($s_bodyEnd)) ? $s_bodyEnd : '').'
+</body>
+</html>';
 	}
 }
 ?>

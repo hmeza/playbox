@@ -10,7 +10,8 @@ define('DEFAULT_LINES_SEPARATOR', '<br><br>');
 
 /**
  * Sort paths starting with folders.
- * @param
+ * @param Object $a
+ * @param Object $b
  */
 function sortPaths($a, $b) {
     if($a->is_dir == $b->is_dir || ($a->is_dir && !$b->is_dir)) return 0;
@@ -40,44 +41,5 @@ if(isset($_GET['remove'])) {
 	$s_path = "/";
 }
 
+\view::main($o_dropbox, $dropbox, $s_message, $s_path, $s_bodyEnd);
 ?>
-<!-- Dirty, but in progress -->
-<html>
-<?php
-echo \view::head();
-?>
-<body>
-<?php
-echo \view::facebookLikeScript();
-?>
-<table width="100%" class="aceitunes">
-<tr>
-<td><p class="aceitunes"><?php echo SITE_NAME; ?></p></td>
-<td>
-<?php
-echo \view::facebookLike();
-echo \view::googlePlusOne();
-?>
-</td>
-</tr>
-<tr>
-<td colspan=2>
-<?php echo $s_message.DEFAULT_LINES_SEPARATOR; ?>
-</td>
-</tr>
-<tr>
-<td width="50%" valign="top">
-<?php
-echo \view::drawFolderList($dropbox->metaData($s_path), $s_path);
-?>
-</td>
-<td valign="top">
-<?php
-echo \view::drawMusicList($o_dropbox).DEFAULT_LINES_SEPARATOR;
-echo $s_playlist.DEFAULT_LINES_SEPARATOR;
-?>
-</td>
-</table>
-<?php if(isset($s_bodyEnd)) echo $s_bodyEnd; ?>
-</body>
-</html>
