@@ -38,8 +38,8 @@ $encrypter = new \Dropbox\OAuth\Storage\Encrypter(ENCRYPTER_KEY);
 // User ID assigned by your auth system (used by persistent storage handlers)
 $userID = 1;
 // Instantiate the database data store and connect
-$storage = new \Dropbox\OAuth\Storage\PDO($encrypter, $userID);
-$storage->connect(DB_HOST, DB_NAME, DB_USER, DB_PASS, DB_PORT);
+$storage = new \Dropbox\OAuth\Storage\Cache($encrypter, $userID);
+//$storage->connect(DB_HOST, DB_NAME, DB_USER, DB_PASS, DB_PORT);
 // Create the consumer and API objects
 $OAuth = new \Dropbox\OAuth\Consumer\Curl($key, $secret, $storage, $callback);
 $dropbox = new \Dropbox\API($OAuth, "dropbox");
