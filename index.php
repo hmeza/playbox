@@ -4,7 +4,8 @@ require_once('lib/bootstrap.php');
 require_once('lib/dropbox.php');
 require_once('lib/view.php');
 
-include 'conf/lang/esp.php';
+$lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+include 'conf/lang/'.$lang.'.php';
 
 define('DEFAULT_LINES_SEPARATOR', '<br><br>');
 
