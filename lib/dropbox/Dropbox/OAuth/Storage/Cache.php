@@ -12,27 +12,17 @@ namespace Dropbox\OAuth\Storage;
 class Cache extends Session
 {
 	/**
-	 * Authenticated user ID
-	 * @var int
-	 */
-	private $userID = null;
-
-	/**
 	 * Construct the parent object and
 	 * set the authenticated user ID
 	 * @param \Dropbox\OAuth\Storage\Encrypter $encrypter
-	 * @param int $userID
 	 * @throws \Dropbox\Exception
 	 */
-	public function __construct(Encrypter $encrypter = null, $userID)
+	public function __construct(Encrypter $encrypter = null)
 	{
 		session_start();
 		// Construct the parent object so we can access the SESSION
 		// instead of reading the file on every request
 		parent::__construct($encrypter);
-
-		// Set the authenticated user ID
-		$this->userID = $userID;
 	}
 
 	/**

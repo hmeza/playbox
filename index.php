@@ -1,4 +1,9 @@
 <?php
+// Set error reporting
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('html_errors', 'On');
+
 require_once('conf/conf.php');
 require_once('lib/bootstrap.php');
 require_once('lib/dropbox.php');
@@ -20,11 +25,11 @@ function sortPaths($a, $b) {
 }
 
 global $dropbox;
+$s_bodyEnd = '';
 $o_dropbox = new dropbox($dropbox);
 if(isset($_GET['path']) && !empty($_GET['path'])) $s_path = urldecode($_GET['path']);
 else $s_path = "/";
 $s_message =  '';
-$s_playlist = '';
 if(isset($_GET['store'])) {
 	$st_list = $o_dropbox->getMusicList();
 	$o_dropbox->addMusicPath($s_path);
@@ -32,7 +37,6 @@ if(isset($_GET['store'])) {
 	$s_message = LANG_STORE_SUCCESSFULLY;
 }
 if(isset($_GET['play'])) {
-	$s_playlist = \view::drawPlaylist($o_dropbox->getSharedPlaylist($_GET['path']));
 	$s_message = LANG_NOW_PLAYING.dropbox::getNameFromPath($_GET['path']);
 	$s_bodyEnd = \view::bodyReady();
 }

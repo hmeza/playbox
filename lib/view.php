@@ -155,10 +155,11 @@ class view {
 	}
 	
 	static public function main($o_dropbox, $dropbox, $s_message = '', $s_path = '', $s_bodyEnd) {
+		$s_playlist = self::drawPlaylist($o_dropbox->getSharedPlaylist($s_path));
 		echo '
 <!-- Dirty, but in progress -->
 <html>
-'.\view::head().'
+'.self::head().'
 <body>
 <?php
 echo \view::facebookLikeScript();
@@ -167,8 +168,8 @@ echo \view::facebookLikeScript();
 <tr>
 <td><p class="aceitunes">'.SITE_NAME.'</p></td>
 <td>
-'.\view::facebookLike().'
-'.\view::googlePlusOne().'
+'.self::facebookLike().'
+'.self::googlePlusOne().'
 </td>
 </tr>
 <tr>
@@ -181,7 +182,7 @@ echo \view::facebookLikeScript();
 '.\view::drawFolderList($dropbox->metaData($s_path), $s_path).'
 </td>
 <td valign="top">
-'.\view::drawMusicList($o_dropbox).DEFAULT_LINES_SEPARATOR.'
+'.self::drawMusicList($o_dropbox).DEFAULT_LINES_SEPARATOR.'
 '.$s_playlist.DEFAULT_LINES_SEPARATOR.'
 </td>
 </table>
