@@ -154,6 +154,14 @@ class view {
 		return $s_content;
 	}
 	
+	/**
+	 * Draws the index page.
+	 * @param \dropbox $o_dropbox
+	 * @param \Dropbox\API $dropbox
+	 * @param string $s_message
+	 * @param string $s_path
+	 * @param string $s_bodyEnd
+	 */
 	static public function main($o_dropbox, $dropbox, $s_message = '', $s_path = '', $s_bodyEnd) {
 		$s_playlist = self::drawPlaylist($o_dropbox->getSharedPlaylist($s_path));
 		echo '
