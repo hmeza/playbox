@@ -30,6 +30,7 @@ $o_dropbox = new dropbox($dropbox);
 if(isset($_GET['path']) && !empty($_GET['path'])) $s_path = urldecode($_GET['path']);
 else $s_path = "/";
 $s_message =  '';
+$s_playlist = '';
 if(isset($_GET['store'])) {
 	$st_list = $o_dropbox->getMusicList();
 	$o_dropbox->addMusicPath($s_path);
@@ -37,6 +38,7 @@ if(isset($_GET['store'])) {
 	$s_message = LANG_STORE_SUCCESSFULLY;
 }
 if(isset($_GET['play'])) {
+	$s_playlist = \view::drawPlaylist($o_dropbox->getSharedPlaylist($s_path));
 	$s_message = LANG_NOW_PLAYING.dropbox::getNameFromPath($_GET['path']);
 	$s_bodyEnd = \view::bodyReady();
 }
@@ -46,5 +48,6 @@ if(isset($_GET['remove'])) {
 	$s_path = "/";
 }
 
+\view::$s_playlist = $s_playlist;
 \view::main($o_dropbox, $dropbox, $s_message, $s_path, $s_bodyEnd);
 ?>

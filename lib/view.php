@@ -1,6 +1,8 @@
 <?php
 
 class view {
+	static public $s_playlist;
+	
 	/**
 	 * Draws the header of the view.
 	 * @return string
@@ -165,15 +167,12 @@ class view {
 	 * @param string $s_bodyEnd
 	 */
 	static public function main($o_dropbox, $dropbox, $s_message = '', $s_path = '', $s_bodyEnd) {
-		$s_playlist = self::drawPlaylist($o_dropbox->getSharedPlaylist($s_path));
 		echo '
 <!-- Dirty, but in progress -->
 <html>
 '.self::head().'
 <body>
-<?php
-echo \view::facebookLikeScript();
-?>
+'.\view::facebookLikeScript().'
 <table width="100%" class="aceitunes">
 <tr>
 <td><p class="aceitunes">'.SITE_NAME.'</p></td>
@@ -193,7 +192,7 @@ echo \view::facebookLikeScript();
 </td>
 <td valign="top">
 '.self::drawMusicList($o_dropbox).DEFAULT_LINES_SEPARATOR.'
-'.$s_playlist.DEFAULT_LINES_SEPARATOR.'
+'.self::$s_playlist.DEFAULT_LINES_SEPARATOR.'
 </td>
 </table>
 '.((isset($s_bodyEnd)) ? $s_bodyEnd : '').'
