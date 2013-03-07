@@ -147,7 +147,9 @@ class view {
 								</li>';
 			}
 			else {
-				$s_content .= '<li class="aceitunes">'.\dropbox::getNameFromPath($o_item->path).'</li>';
+				$s_content .= '<li class="aceitunes">
+						<a href="" class="aceitunesDisabled">'.\dropbox::getNameFromPath($o_item->path).'</a>
+								</li>';
 			}
 		}
 		$s_content .= '</ul>';

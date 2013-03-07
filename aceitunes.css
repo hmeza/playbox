@@ -16,7 +16,6 @@ p.aceitunes {
 li.aceitunes {
 	font-family: Arial;
 	font-size: 14px;
-	text-color: #ffffff;
 	color: #EDF1F5;
 	border-color: #EDF1F5;
 	border-top: 1px solid;
@@ -37,10 +36,18 @@ li.aceitunes:hover {
 }
 
 a.aceitunes {
+	color: #000000;
 }
 
 a.aceitunes:hover {
 	color: #2c8ed1;
+}
+
+a.aceitunesDisabled {
+	font-weight: normal;
+	text-decoration: none;
+	color: #000000;
+	cursor: default;
 }
 
 html, body {
