@@ -7,8 +7,6 @@ require_once('lib/view.php');
 $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
 include 'conf/lang/'.$lang.'.php';
 
-define('DEFAULT_LINES_SEPARATOR', '<br><br>');
-
 /**
  * Sort paths starting with folders.
  * @param Object $a
@@ -22,27 +20,24 @@ function sortPaths($a, $b) {
 global $dropbox;
 $s_bodyEnd = '';
 $o_dropbox = new dropbox($dropbox);
-if(isset($_GET['path']) && !empty($_GET['path'])) $s_path = urldecode($_GET['path']);
+if(isset($_POST['path']) && !empty($_POST['path'])) $s_path = urldecode($_POST['path']);
 else $s_path = "/";
 $s_message =  '';
-$s_playlist = \view::drawPlaylist(array());
-if(isset($_GET['store'])) {
+$s_playlist = '';
+if(isset($_POST['store'])) {
 	$st_list = $o_dropbox->getMusicList();
 	$o_dropbox->addMusicPath($s_path);
 	$o_dropbox->storeMusicList();
 	$s_message = LANG_STORE_SUCCESSFULLY;
 }
-if(isset($_GET['play'])) {
+if(isset($_POST['play'])) {
 	$s_playlist = \view::drawPlaylist($o_dropbox->getSharedPlaylist($s_path));
-	$s_message = LANG_NOW_PLAYING.dropbox::getNameFromPath($_GET['path']);
-	$s_bodyEnd = \view::bodyReady();
+	$s_message = LANG_NOW_PLAYING.dropbox::getNameFromPath($_POST['path']);
 }
-if(isset($_GET['remove'])) {
+if(isset($_POST['remove'])) {
 	$o_dropbox->removeMusicPath($_GET['path']);
 	$o_dropbox->storeMusicList();
 	$s_path = "/";
 }
-
-\view::$s_playlist = $s_playlist;
-\view::main($o_dropbox, $dropbox, $s_message, $s_path, $s_bodyEnd);
+echo $s_playlist;
 ?>

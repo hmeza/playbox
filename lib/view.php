@@ -19,11 +19,29 @@ class view {
     <script type="text/javascript">
         $(document).ready(function() {
             $("#playlist").playlist(
-                {
+                { 
                     playerurl: "lib/drplayer/swf/drplayer.swf"
                 }
             );
         });
+
+		function updatePlaylist(path) {
+			var request = $.ajax({
+	        	url: "http://127.0.0.1/projects/ace.itun.es/proxy.php",
+		        type: "post",
+				data: {path: path, play: 1},
+				success: function (response, textStatus, jqXHR){
+					$("#playlist_container").html(response);
+				}
+	    	});
+			request.done(function (response, textStatus, jqXHR) {
+				$("#playlist").playlist(
+	                { 
+	                    playerurl: "lib/drplayer/swf/drplayer.swf"
+	                }
+            	);
+			});
+		}
     </script>
 </head>';
 		return $s_return;
@@ -83,7 +101,7 @@ class view {
 		$st_list = $o_dropbox->getMusicList();
 		foreach($st_list as $s_key => $s_entry) {
 			$s_content .= '<a href="index.php?path='.$s_key.'&remove=true">'.LANG_REMOVE.'</a> ';
-			$s_content .= '<a href="index.php?path='.$s_key.'&play=true">'.LANG_PLAY.'</a> ';
+			$s_content .= '<span onclick="updatePlaylist(\''.$s_key.'\')" style="cursor:hand; cursor:pointer;">'.LANG_PLAY.'</span> ';
 			$s_content .= '<a href="index.php?path='.$s_key.'">'.\dropbox::getNameFromPath($s_key).'</a><br>';
 		}
 		return $s_content;
@@ -192,7 +210,9 @@ class view {
 </td>
 <td valign="top">
 '.self::drawMusicList($o_dropbox).DEFAULT_LINES_SEPARATOR.'
+<div id="playlist_container">
 '.self::$s_playlist.DEFAULT_LINES_SEPARATOR.'
+</div>
 </td>
 </table>
 '.((isset($s_bodyEnd)) ? $s_bodyEnd : '').'
