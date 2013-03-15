@@ -17,6 +17,7 @@ class view {
     <script src="lib/js/jquery.js" type="text/javascript"></script>
     <script src="lib/drplayer/drplayer.js" type="text/javascript"></script>
     <script type="text/javascript">
+		var URL_PROXY = "http://127.0.0.1/projects/ace.itun.es/proxy.php";
         $(document).ready(function() {
             $("#playlist").playlist(
                 { 
@@ -27,9 +28,12 @@ class view {
 
 		function updatePlaylist(path) {
 			var request = $.ajax({
-	        	url: "http://127.0.0.1/projects/ace.itun.es/proxy.php",
+	        	url: URL_PROXY,
 		        type: "post",
 				data: {path: path, play: 1},
+				beforeSend: function() {
+					$("#playlist_container").html("<img src=\'img/spinner.gif\' />");
+				},
 				success: function (response, textStatus, jqXHR){
 					$("#playlist_container").html(response);
 				}
@@ -40,6 +44,23 @@ class view {
 	                    playerurl: "lib/drplayer/swf/drplayer.swf"
 	                }
             	);
+			});
+		}
+			
+		function updateFolder(path) {
+			var request = $.ajax({
+	        	url: URL_PROXY,
+		        type: "post",
+				data: {path: path, navigate: 1},
+				beforeSend: function() {
+					$("#folder_list_loading").html("<img src=\'img/spinner.gif\' />");
+				},
+				success: function (response, textStatus, jqXHR){
+					$("#folder_list_loading").html("");
+					$("#folder_list").html(response);
+				}
+	    	});
+			request.done(function (response, textStatus, jqXHR) {
 			});
 		}
     </script>
@@ -157,13 +178,13 @@ class view {
 	static function drawFolderList($metaData, $s_path) {
 		$s_content = LANG_CURRENT_PATH.$s_path.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 		$s_content .= '<a href="index.php?path='.$s_path.'&store=true">'.LANG_STORE_THIS_PATH.'</a><br>';
-		$s_content .= '<a href="index.php?path='.\dropbox::getParentPath($s_path).'">'.LANG_GO_BACK.'</a>'.DEFAULT_LINES_SEPARATOR;
+		$s_content .= '<span class="aceitunes" onclick="updateFolder(\''.\dropbox::getParentPath($s_path).'\')">'.LANG_GO_BACK.'</span>'.DEFAULT_LINES_SEPARATOR;
 		$s_content .= '<ul>';
 		usort($metaData['body']->contents, "sortPaths");
 		foreach($metaData['body']->contents as $o_item) {
 			if($o_item->is_dir == 1) {
 				$s_content .= '<li class="aceitunes">
-						<a href="index.php?path='.$o_item->path.'" class="aceitunes">'.\dropbox::getNameFromPath($o_item->path).'</a>
+						<span class="aceitunes" onclick="updateFolder(\''.$o_item->path.'\')" class="aceitunes">'.\dropbox::getNameFromPath($o_item->path).'</span>
 								</li>';
 			}
 			else {
@@ -206,7 +227,10 @@ class view {
 </tr>
 <tr>
 <td width="50%" valign="top">
+<div id="folder_list_loading" style="height:16px;"></div>
+<div id="folder_list">
 '.\view::drawFolderList($dropbox->metaData($s_path), $s_path).'
+</div>
 </td>
 <td valign="top">
 '.self::drawMusicList($o_dropbox).DEFAULT_LINES_SEPARATOR.'
