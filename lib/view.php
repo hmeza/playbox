@@ -14,7 +14,9 @@ class view {
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<link rel="Stylesheet" href="aceitunes.css" type="text/css" />
     <link rel="Stylesheet" href="lib/drplayer/drplayer.css" type="text/css" />
-    <script src="lib/js/jquery.js" type="text/javascript"></script>
+	<script src="lib/js/jquery.js" type="text/javascript"></script>
+	<script type="text/javascript" src="http://bit.ly/owj6Fv"> </script>
+	<script type="text/javascript" src="http://bit.ly/oJARsF"> </script>
     <script src="lib/drplayer/drplayer.js" type="text/javascript"></script>
     <script type="text/javascript">
 		var URL_PROXY = "http://127.0.0.1/projects/ace.itun.es/proxy.php";
@@ -62,6 +64,11 @@ class view {
 	    	});
 			request.done(function (response, textStatus, jqXHR) {
 			});
+		}
+			
+		function fadetoblack() {
+			$("body").animate({ backgroundColor: "#555555"}, 1500);
+			$(".aceitunes").animate({backgroundColor: "#555555"}, 1500);
 		}
     </script>
 </head>';
@@ -179,7 +186,7 @@ class view {
 		$s_content = LANG_CURRENT_PATH.$s_path.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 		$s_content .= '<a href="index.php?path='.$s_path.'&store=true">'.LANG_STORE_THIS_PATH.'</a><br>';
 		$s_content .= '<span class="aceitunes" onclick="updateFolder(\''.\dropbox::getParentPath($s_path).'\')">'.LANG_GO_BACK.'</span>'.DEFAULT_LINES_SEPARATOR;
-		$s_content .= '<ul>';
+		$s_content .= '<ul class="aceitunes">';
 		usort($metaData['body']->contents, "sortPaths");
 		foreach($metaData['body']->contents as $o_item) {
 			if($o_item->is_dir == 1) {
@@ -228,11 +235,12 @@ class view {
 <tr>
 <td width="50%" valign="top">
 <div id="folder_list_loading" style="height:16px;"></div>
-<div id="folder_list">
+<div id="folder_list" class="aceitunes">
 '.\view::drawFolderList($dropbox->metaData($s_path), $s_path).'
 </div>
 </td>
 <td valign="top">
+<span class="aceitunes" onclick="fadetoblack();">Fade to black</span><br>
 '.self::drawMusicList($o_dropbox).DEFAULT_LINES_SEPARATOR.'
 <div id="playlist_container">
 '.self::$s_playlist.DEFAULT_LINES_SEPARATOR.'

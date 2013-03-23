@@ -50,6 +50,15 @@ a.aceitunesDisabled {
 	cursor: default;
 }
 
+span.aceitunes {
+	color: #2c8ed1;
+}
+
+span.aceitunes:hover {
+	cursor: hand;
+	cursor: pointer;
+}
+
 html, body {
 	height: 90%;
 	border: 15px;
