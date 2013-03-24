@@ -169,25 +169,25 @@ class view {
 '.\view::facebookLikeScript().'
 <table width="100%" class="aceitunes">
 <tr>
-<td><p class="aceitunes">'.SITE_NAME.'</p></td>
-<td>
+<td class="aceitunes"><p class="aceitunes">'.SITE_NAME.'</p></td>
+<td class="aceitunes">
 '.self::facebookLike().'
 '.self::googlePlusOne().'
 </td>
 </tr>
 <tr>
-<td colspan=2>
+<td colspan=2 class="aceitunes">
 '.$s_message.DEFAULT_LINES_SEPARATOR.'
 </td>
 </tr>
 <tr>
-<td width="50%" valign="top">
-<div id="folder_list_loading" style="height:16px;"></div>
+<td width="50%" valign="top" class="aceitunes">
+<div id="folder_list_loading" style="height:16px;" class="aceitunes"></div>
 <div id="folder_list" class="aceitunes">
 '.\view::drawFolderList($dropbox->metaData($s_path), $s_path).'
 </div>
 </td>
-<td valign="top">
+<td valign="top" class="aceitunes">
 <span class="aceitunes" onclick="fadetoblack();">Fade to black</span><br>
 '.self::drawMusicList($o_dropbox).DEFAULT_LINES_SEPARATOR.'
 <div id="playlist_container">
