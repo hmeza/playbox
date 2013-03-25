@@ -32,11 +32,6 @@ if(isset($_GET['store'])) {
 	$o_dropbox->storeMusicList();
 	$s_message = LANG_STORE_SUCCESSFULLY;
 }
-if(isset($_GET['play'])) {
-	$s_playlist = \view::drawPlaylist($o_dropbox->getSharedPlaylist($s_path));
-	$s_message = LANG_NOW_PLAYING.dropbox::getNameFromPath($_GET['path']);
-	$s_bodyEnd = \view::bodyReady();
-}
 if(isset($_GET['remove'])) {
 	$o_dropbox->removeMusicPath($_GET['path']);
 	$o_dropbox->storeMusicList();

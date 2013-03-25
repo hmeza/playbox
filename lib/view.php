@@ -82,6 +82,14 @@ class view {
 		}
 		return $s_content;
 	}
+
+	static private function drawPlayButtons() {
+		return '
+		<a href="javascript:void(0);" onClick="$(\'#playlist\').playlist(\'prev\');">'.LANG_PREV.'</a>
+		<a href="javascript:void(0);" onClick="$(\'#playlist\').playlist(\'next\');">'.LANG_NEXT.'</a>
+		<a href="javascript:void(0);" onClick="$(\'#playlist\').playlist(\'pause\');">'.LANG_PAUSE.'</a>
+		<a href="javascript:void(0);" onClick="$(\'#playlist\').playlist(\'play\');">'.LANG_PLAY.'</a>';
+	}
 	
 	/**
 	 * Draws the playlist.
@@ -89,7 +97,8 @@ class view {
 	 * @return string
 	 */
 	static function drawPlaylist($st_playlist) {
-		$s_content = '<div id="playlist">';
+		$s_content = self::drawPlayButtons();
+		$s_content .= '<div id="playlist">';
 		foreach($st_playlist as $st_entry) {
 			$s_content .= '<div href="'.$st_entry['url'].'" style="width: 400px;" class="item">
 				<div>
@@ -101,11 +110,8 @@ class view {
 				</div>';
 		}
 		$s_content .= '
-		</div>	
-		<a href="javascript:void(0);" onClick="$(\'#playlist\').playlist(\'prev\');">'.LANG_PREV.'</a>
-		<a href="javascript:void(0);" onClick="$(\'#playlist\').playlist(\'next\');">'.LANG_NEXT.'</a>
-		<a href="javascript:void(0);" onClick="$(\'#playlist\').playlist(\'pause\');">'.LANG_PAUSE.'</a>
-		<a href="javascript:void(0);" onClick="$(\'#playlist\').playlist(\'play\');">'.LANG_PLAY.'</a>';
+		</div>'.self::drawPlayButtons();
+
 		return $s_content;
 	}
 	
