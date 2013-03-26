@@ -46,5 +46,9 @@ if(isset($_POST['get_list'])) {
 	$s_response = $o_dropbox->getSharedPlaylist($_POST['get_list']);
 	$s_response = json_encode($s_response);
 }
+if(isset($_POST['get_media'])) {
+	$s_response = $o_dropbox->shareSong($_POST['get_media']);
+	$s_response = json_encode($s_response);	
+}
 echo $s_response;
 ?>

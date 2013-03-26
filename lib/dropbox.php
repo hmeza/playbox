@@ -100,6 +100,16 @@ class dropbox {
 			unset($this->st_musicList[$s_path]);
 	}
 	
+	public function shareSong($s_path) {
+		$st_sharedItem = $this->o_dropboxHandler->media($s_path);
+		$st_shared = array(
+				'path' => $s_path,
+				'url' => $st_sharedItem['body']->url,
+				'expires' => $st_sharedItem['body']->expires
+		);
+		return $st_shared;
+	}
+	
 	/**
 	 * Request sharing for a certain folder to play it.
 	 * @param string $s_path
@@ -110,12 +120,7 @@ class dropbox {
 		$st_shares = array();
 		foreach($metaData['body']->contents as $o_item) {
 			if($o_item->is_dir != 1 && strstr($o_item->path, ".mp3")) {
-				$st_sharedItem = $this->o_dropboxHandler->media($o_item->path, false);
-				$st_shares[] = array(
-					'path' => $o_item->path,
-					'url' => $st_sharedItem['body']->url,
-					'expires' => $st_sharedItem['body']->expires
-				);
+				$st_shares[] = $this->shareSong($o_item->path);
 			}
 		}
 		return $st_shares;
