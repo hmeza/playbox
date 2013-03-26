@@ -105,7 +105,7 @@ class dropbox {
 		$st_shared = array(
 				'path' => $s_path,
 				'url' => $st_sharedItem['body']->url,
-				'expires' => $st_sharedItem['body']->expires
+				'expires' => strtotime($st_sharedItem['body']->expires)
 		);
 		return $st_shared;
 	}
