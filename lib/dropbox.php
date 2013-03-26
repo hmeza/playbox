@@ -111,7 +111,11 @@ class dropbox {
 		foreach($metaData['body']->contents as $o_item) {
 			if($o_item->is_dir != 1 && strstr($o_item->path, ".mp3")) {
 				$st_sharedItem = $this->o_dropboxHandler->media($o_item->path, false);
-				$st_shares[] = array('path' => $o_item->path, 'url' => $st_sharedItem['body']->url);
+				$st_shares[] = array(
+					'path' => $o_item->path,
+					'url' => $st_sharedItem['body']->url,
+					'expires' => $st_sharedItem['body']->expires
+				);
 			}
 		}
 		return $st_shares;
