@@ -42,5 +42,9 @@ if(isset($_POST['remove'])) {
 if(isset($_POST['navigate'])) {
 	$s_response = \view::drawFolderList($dropbox->metaData($s_path), $s_path);
 }
+if(isset($_POST['get_list'])) {
+	$s_response = $o_dropbox->getSharedPlaylist($_POST['get_list']);
+	$s_response = json_encode($s_response);
+}
 echo $s_response;
 ?>
