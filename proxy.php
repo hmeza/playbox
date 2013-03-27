@@ -50,5 +50,12 @@ if(isset($_POST['get_media'])) {
 	$s_response = $o_dropbox->shareSong($_POST['get_media']);
 	$s_response = json_encode($s_response);	
 }
+if(isset($_POST['store_playlist'])) {
+	error_log("received: ".print_r($_POST['store_playlist'],true));
+	$st_list = $o_dropbox->getMusicList();
+	$o_dropbox->storePlaylist(json_decode($_POST['store_playlist']))
+				->storeMusicList();
+	$s_response = LANG_STORE_SUCCESSFULLY;
+}
 echo $s_response;
 ?>

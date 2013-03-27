@@ -92,6 +92,18 @@ class dropbox {
 	}
 	
 	/**
+	 * Stores or updates a playlist.
+	 * @param array $st_playlist
+	 * @return dropbox
+	 */
+	public function storePlaylist($st_playlist) {
+		foreach($st_playlist as $s_key => $st_value) {
+			$this->st_musicList[$s_key] = urldecode($st_value);
+		}
+		return $this;
+	}
+	
+	/**
 	 * Removes a music folder if it exists.
 	 * @param string $s_path
 	 */
