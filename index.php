@@ -3,6 +3,7 @@ require_once('conf/conf.php');
 require_once('lib/bootstrap.php');
 require_once('lib/dropbox.php');
 require_once('lib/view.php');
+error_reporting(~E_ALL);
 
 $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
 include 'conf/lang/'.$lang.'.php';
@@ -23,7 +24,6 @@ $o_dropbox = new dropbox($dropbox);
 if(isset($_GET['path']) && !empty($_GET['path'])) $s_path = urldecode($_GET['path']);
 else $s_path = "/";
 $s_message =  '';
-$s_playlist = \view::drawPlaylist(array());
 if(isset($_GET['store'])) {
 	$st_list = $o_dropbox->getMusicList();
 	$o_dropbox->addMusicPath($s_path);
@@ -36,6 +36,5 @@ if(isset($_GET['remove'])) {
 	$s_path = "/";
 }
 
-\view::$s_playlist = $s_playlist;
 \view::main($o_dropbox, $dropbox, $s_message, $s_path, $s_bodyEnd);
 ?>

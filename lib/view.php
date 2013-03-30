@@ -1,7 +1,7 @@
 <?php
 
 class view {
-	static public $s_playlist;
+	static public $s_playlist = "";
 	
 	/**
 	 * Draws the header of the view.
@@ -91,31 +91,7 @@ class view {
 		<a href="javascript:void(0);" onClick="$(\'#playlist\').playlist(\'pause\');">'.LANG_PAUSE.'</a>
 		<a href="javascript:void(0);" onClick="$(\'#playlist\').playlist(\'play\');">'.LANG_PLAY.'</a>';
 	}
-	
-	/**
-	 * Draws the playlist.
-	 * @param array $st_playlist
-	 * @return string
-	 */
-	static function drawPlaylist($st_playlist) {
-		$s_content = self::drawPlayButtons();
-		$s_content .= '<div id="playlist">';
-		foreach($st_playlist as $st_entry) {
-			$s_content .= '<div href="'.$st_entry['url'].'" style="width: 400px;" class="item">
-				<div>
-				<div class="fr duration"></div>
-				<div class="btn play"></div>
-				<div class="title">'.\dropbox::getNameFromPath($st_entry['path']).'</div>
-				</div>
-				<div class="player inactive"></div>
-				</div>';
-		}
-		$s_content .= '
-		</div>'.self::drawPlayButtons();
 
-		return $s_content;
-	}
-	
 	/**
 	 * Draws the javascript code to be executed once the DOM is fully loaded.
 	 * @return string
