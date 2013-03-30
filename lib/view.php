@@ -18,6 +18,7 @@ class view {
 	<script type="text/javascript" src="http://bit.ly/owj6Fv"> </script>
 	<script type="text/javascript" src="http://bit.ly/oJARsF"> </script>
     <script src="lib/drplayer/drplayer.js" type="text/javascript"></script>
+	<script src="lib/js/config.js" type="text/javascript"></script>
     <script src="lib/js/playbox.js" type="text/javascript"></script>
 </head>';
 		return $s_return;
