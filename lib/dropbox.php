@@ -92,12 +92,34 @@ class dropbox {
 	}
 	
 	/**
+	 * Stores or updates a playlist.
+	 * @param array $st_playlist
+	 * @return dropbox
+	 */
+	public function storePlaylist($st_playlist) {
+		foreach($st_playlist as $s_key => $st_value) {
+			$this->st_musicList[$s_key] = urldecode($st_value);
+		}
+		return $this;
+	}
+	
+	/**
 	 * Removes a music folder if it exists.
 	 * @param string $s_path
 	 */
 	public function removeMusicPath($s_path) {
 		if(array_key_exists($s_path, $this->st_musicList))
 			unset($this->st_musicList[$s_path]);
+	}
+	
+	public function shareSong($s_path) {
+		$st_sharedItem = $this->o_dropboxHandler->media($s_path);
+		$st_shared = array(
+				'path' => $s_path,
+				'url' => $st_sharedItem['body']->url,
+				'expires' => strtotime($st_sharedItem['body']->expires)
+		);
+		return $st_shared;
 	}
 	
 	/**
@@ -110,8 +132,7 @@ class dropbox {
 		$st_shares = array();
 		foreach($metaData['body']->contents as $o_item) {
 			if($o_item->is_dir != 1 && strstr($o_item->path, ".mp3")) {
-				$st_sharedItem = $this->o_dropboxHandler->media($o_item->path, false);
-				$st_shares[] = array('path' => $o_item->path, 'url' => $st_sharedItem['body']->url);
+				$st_shares[] = $this->shareSong($o_item->path);
 			}
 		}
 		return $st_shares;
