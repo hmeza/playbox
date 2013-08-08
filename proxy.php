@@ -8,12 +8,17 @@ $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
 include 'conf/lang/'.$lang.'.php';
 
 /**
- * Sort paths starting with folders.
+ * Sort paths by name starting with folders.
  * @param Object $a
  * @param Object $b
  */
 function sortPaths($a, $b) {
-    if($a->is_dir == $b->is_dir || ($a->is_dir && !$b->is_dir)) return 0;
+	if(!$a->is_dir && !$b->is_dir) {
+		return (strcmp(strtoupper(dropbox::getNameFromPath($a->path)), strtoupper(dropbox::getNameFromPath($b->path))) > 0) ? 1 : 0;
+	}
+    else if($a->is_dir == $b->is_dir || $a->is_dir && !$b->is_dir) {
+    	return 0;
+    }
     return (!$a->is_dir && $b->is_dir) ? 1 : 0;
 }
 
@@ -24,21 +29,25 @@ if(isset($_POST['path']) && !empty($_POST['path'])) $s_path = urldecode($_POST['
 else $s_path = "/";
 $s_message =  '';
 $s_response = '';
+// Save the current music path to the list of paths
 if(isset($_POST['store'])) {
 	$st_list = $o_dropbox->getMusicList();
 	$o_dropbox->addMusicPath($s_path);
 	$o_dropbox->storeMusicList();
 	$s_message = LANG_STORE_SUCCESSFULLY;
 }
+// Play a playlist/folder
 if(isset($_POST['play'])) {
 	$s_response = \view::drawPlaylist($o_dropbox->getSharedPlaylist($s_path));
 	$s_message = LANG_NOW_PLAYING.dropbox::getNameFromPath($_POST['path']);
 }
+// Remove a playlist/folder from the playlists
 if(isset($_POST['remove'])) {
 	$o_dropbox->removeMusicPath($_GET['path']);
 	$o_dropbox->storeMusicList();
 	$s_path = "/";
 }
+// Retrieve a folder
 if(isset($_POST['navigate'])) {
 	$s_response = \view::drawFolderList($dropbox->metaData($s_path), $s_path);
 }
