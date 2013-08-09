@@ -77,19 +77,11 @@ class view {
 		$s_content = LANG_MY_PLAYLIST.'<br>';
 		$st_list = $o_dropbox->getMusicList();
 		foreach($st_list as $s_key => $s_entry) {
-			$s_content .= '<a href="index.php?path='.$s_key.'&remove=true">'.LANG_REMOVE.'</a> ';
-			$s_content .= '<span onclick="updatePlaylist(\''.$s_key.'\')" style="cursor:hand; cursor:pointer;">'.LANG_PLAY.'</span> ';
-			$s_content .= '<a href="index.php?path='.$s_key.'">'.\dropbox::getNameFromPath($s_key).'</a><br>';
+			$s_content .= '<a href="index.php?path='.urlencode($s_key).'&remove=true">'.LANG_REMOVE.'</a> ';
+			$s_content .= '<span onclick="updatePlaylist(\''.urlencode($s_key).'\')" style="cursor:hand; cursor:pointer;">'.LANG_PLAY.'</span> ';
+			$s_content .= '<a href="index.php?path='.urlencode($s_key).'">'.\dropbox::getNameFromPath($s_key).'</a><br>';
 		}
 		return $s_content;
-	}
-
-	static private function drawPlayButtons() {
-		return '
-		<a href="javascript:void(0);" onClick="$(\'#playlist\').playlist(\'prev\');">'.LANG_PREV.'</a>
-		<a href="javascript:void(0);" onClick="$(\'#playlist\').playlist(\'next\');">'.LANG_NEXT.'</a>
-		<a href="javascript:void(0);" onClick="$(\'#playlist\').playlist(\'pause\');">'.LANG_PAUSE.'</a>
-		<a href="javascript:void(0);" onClick="$(\'#playlist\').playlist(\'play\');">'.LANG_PLAY.'</a>';
 	}
 	
 	/**
@@ -98,8 +90,7 @@ class view {
 	 * @return string
 	 */
 	static function drawPlaylist($st_playlist) {
-		$s_content = self::drawPlayButtons();
-		$s_content .= '<div id="playlist">';
+		$s_content = '<div id="playlist">';
 		foreach($st_playlist as $st_entry) {
 			$s_content .= '<div href="'.$st_entry['url'].'" style="width: 400px;" class="item">
 				<div>
@@ -111,7 +102,7 @@ class view {
 				</div>';
 		}
 		$s_content .= '
-		</div>'.self::drawPlayButtons();
+		</div>';
 
 		return $s_content;
 	}
@@ -146,7 +137,7 @@ class view {
 		foreach($metaData['body']->contents as $o_item) {
 			if($o_item->is_dir == 1) {
 				$s_content .= '<li class="aceitunes">
-						<span class="aceitunes" onclick="updateFolder(\''.$o_item->path.'\')" class="aceitunes">'.\dropbox::getNameFromPath($o_item->path).'</span>
+						<span class="aceitunes" onclick="updateFolder(\''.urlencode($o_item->path).'\')" class="aceitunes">'.\dropbox::getNameFromPath($o_item->path).'</span>
 								</li>';
 			}
 			else {
