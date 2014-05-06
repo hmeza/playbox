@@ -31,12 +31,6 @@ if(isset($_GET['path']) && !empty($_GET['path'])) $s_path = urldecode($_GET['pat
 else $s_path = "/";
 $s_message =  '';
 $s_playlist = \view::drawPlaylist(array());
-if(isset($_GET['store'])) {
-	$st_list = $o_dropbox->getMusicList();
-	$o_dropbox->addMusicPath($s_path);
-	$o_dropbox->storeMusicList();
-	$s_message = LANG_STORE_SUCCESSFULLY;
-}
 if(isset($_GET['remove'])) {
 	$o_dropbox->removeMusicPath($_GET['path']);
 	$o_dropbox->storeMusicList();

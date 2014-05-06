@@ -20,6 +20,16 @@ class view {
     <script src="lib/drplayer/drplayer.js" type="text/javascript"></script>
 	<script src="lib/js/config.js" type="text/javascript"></script>
     <script src="lib/js/playbox.js" type="text/javascript"></script>
+	<script>
+	  (function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,\'script\',\'//www.google-analytics.com/analytics.js\',\'ga\');
+	
+	  ga(\'create\', \'UA-10754954-9\', \'dootic.com\');
+	  ga(\'send\', \'pageview\');
+	
+	</script>
 </head>';
 		return $s_return;
 	}
@@ -130,7 +140,7 @@ class view {
 	 */
 	static function drawFolderList($metaData, $s_path) {
 		$s_content = LANG_CURRENT_PATH.$s_path.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-		$s_content .= '<a href="index.php?path='.$s_path.'&store=true">'.LANG_STORE_THIS_PATH.'</a><br>';
+		$s_content .= '<div id="store_path" class="clickable" href="'.$s_path.'">'.LANG_STORE_THIS_PATH.'</div><br>';
 		$s_content .= '<span class="aceitunes" onclick="updateFolder(\''.\dropbox::getParentPath($s_path).'\')">'.LANG_GO_BACK.'</span>'.DEFAULT_LINES_SEPARATOR;
 		$s_content .= '<ul class="aceitunes">';
 		usort($metaData['body']->contents, "sortPaths");
@@ -187,7 +197,9 @@ class view {
 </td>
 <td valign="top" class="aceitunes">
 <span class="aceitunes" onclick="fadetoblack();">Fade to black</span><br>
+<div id="playlists">
 '.self::drawMusicList($o_dropbox).DEFAULT_LINES_SEPARATOR.'
+</div>
 <div id="playlist_container">
 '.self::$s_playlist.DEFAULT_LINES_SEPARATOR.'
 </div>
