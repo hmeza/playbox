@@ -85,3 +85,8 @@ html, body {
 }
 #top { top: 0; }
 #bottom { bottom: 0; }
+
+.clickable {
+	cursor: hand;
+	cursor: pointer;
+}
